@@ -1,0 +1,47 @@
+<section>
+  <div class="container">
+    <h1>Register</h1>
+    <form [formGroup]="registertionForm" (ngSubmit)="submit()">
+      <!-- User Name -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText formControlName="userName" placeholder="Username" />
+        </p-inputGroup>
+      </div>
+
+      <!-- Email -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-envelope"></i> <!-- تغيير الأيقونة لتناسب البريد -->
+          </p-inputGroupAddon>
+          <input pInputText formControlName="email" placeholder="Email" />
+        </p-inputGroup>
+      </div>
+
+      <!-- Password -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i> <!-- أيقونة القفل لكلمة المرور -->
+          </p-inputGroupAddon>
+          <input pInputText type="password" formControlName="password" placeholder="Password" />
+        </p-inputGroup>
+      </div>
+
+      <!-- RePassword -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input pInputText type="password" formControlName="rePassword" placeholder="Confirm Password" />
+        </p-inputGroup>
+      </div>
+      <p-button type="Submit" label="Submit" />
+    </form>
+  </div>
+</section>
