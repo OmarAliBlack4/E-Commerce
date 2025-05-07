@@ -10,16 +10,56 @@
           </p-inputGroupAddon>
           <input pInputText formControlName="userName" placeholder="Username" />
         </p-inputGroup>
+        <div class="validation-ms">
+          @if (userName.dirty && userName.touched) {
+            @if (userName.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'User Name is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+            @if (userName.getError('minlength')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'User Name minLength is 3 char' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
       </div>
 
       <!-- Email -->
       <div class="faild">
         <p-inputGroup>
           <p-inputGroupAddon>
-            <i class="pi pi-envelope"></i> <!-- تغيير الأيقونة لتناسب البريد -->
+            <i class="pi pi-envelope"></i>
           </p-inputGroupAddon>
           <input pInputText formControlName="email" placeholder="Email" />
         </p-inputGroup>
+        <div class="validation-ms">
+          @if (email.touched && email.dirty) {
+            @if (email.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Email  is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+            @if (userName.getError('email')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Email invalid' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
       </div>
 
       <!-- Password -->
@@ -30,6 +70,18 @@
           </p-inputGroupAddon>
           <input pInputText type="password" formControlName="password" placeholder="Password" />
         </p-inputGroup>
+        <div class="validation-ms">
+          @if (password.touched && password.dirty) {
+            @if (password.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
       </div>
 
       <!-- RePassword -->
@@ -40,8 +92,32 @@
           </p-inputGroupAddon>
           <input pInputText type="password" formControlName="rePassword" placeholder="Confirm Password" />
         </p-inputGroup>
+        <div class="validation-ms">
+          @if (rePassword.touched && rePassword.dirty) {
+            @if (rePassword.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+            @if (rePassword.getError('passNotMatch')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password not match' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
       </div>
       <p-button type="Submit" label="Submit" />
     </form>
   </div>
 </section>
+<!-- notifications -->
+<div class="card flex justify-content-center">
+  <p-toast />
+</div>

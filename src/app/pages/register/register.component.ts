@@ -1,9 +1,16 @@
+import { AuthService } from './../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { MessagesModule } from 'primeng/messages';
+import { Message, MessageService } from 'primeng/api';
+import { IRegister } from '../../core/interfaces/iregister';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+
 
 @Component({
   selector: 'app-register',
@@ -14,11 +21,15 @@ import { ButtonModule } from 'primeng/button';
     InputGroupModule,
     InputGroupAddonModule,
     InputTextModule,
-    ButtonModule],
+    ButtonModule,
+    MessagesModule,
+    ToastModule,
+    RippleModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
+  providers: [MessageService]
 })
-export class RegisterComponent {
+export class RegisterComponent   {
 
 // propirity
   userName! : FormControl;
@@ -26,10 +37,10 @@ export class RegisterComponent {
   password!:FormControl;
   rePassword!:FormControl;
   registertionForm!:FormGroup;
-
+  messages!: Message[] ;
 
 // Constructor
-  constructor(){
+  constructor(private _AuthService: AuthService ,private messageService: MessageService){
     this.initFormControls();
     this.initFormGroup();
   }
@@ -66,6 +77,35 @@ export class RegisterComponent {
 
 //Submit Method
   submit():void{
-    console.log(this.registertionForm.value);
+    if(this.registertionForm.valid){
+      console.log(this.registertionForm.value);
+      this.registerApi(this.registertionForm.value);
+    }else{
+      this.registertionForm.markAllAsTouched();
+      Object.keys(this.registertionForm.controls).forEach((c)=>
+      this.registertionForm.controls[c].markAsDirty());
+    }
+  }
+
+
+  //registerApi
+  registerApi(data : IRegister):void{
+    this._AuthService.register(data).subscribe({
+      next:(res)=>{
+        console.log(res);
+
+        if(res.user.id){
+          this.show("success","Success" ,"Success register");
+        }
+      },
+      error:(error)=>{this.show("error","Error" ,error.error.error);},
+    });
+  }
+
+
+
+  //notification
+  show(se : string , su : string , de:string) {
+    this.messageService.add({ severity:se, summary: su, detail: de });
   }
 }
