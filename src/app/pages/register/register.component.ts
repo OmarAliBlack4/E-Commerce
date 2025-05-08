@@ -103,9 +103,9 @@ export class RegisterComponent {
       next: (res) => {
         if(res.user.id) {
           this.show("success","Success" ,"Success register");
+          this._router.navigate(['login']);
         }
         this._ngxSpinnerService.hide();
-        this._router.navigate(['/']);
       },
       error: (error) => {
         this.show("error","Error" ,error.error.error);
