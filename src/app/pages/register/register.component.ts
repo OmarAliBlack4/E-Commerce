@@ -11,6 +11,7 @@ import { IRegister } from '../../core/interfaces/iregister';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -44,7 +45,9 @@ export class RegisterComponent {
 // Constructor
   constructor(private _AuthService: AuthService ,
     private messageService: MessageService,
-    private _ngxSpinnerService : NgxSpinnerService){
+    private _ngxSpinnerService : NgxSpinnerService,
+    private _router : Router){
+
     this.initFormControls();
     this.initFormGroup();
   }
@@ -85,7 +88,6 @@ export class RegisterComponent {
     if(this.registertionForm.valid){
       console.log(this.registertionForm.value);
       this.registerApi(this.registertionForm.value);
-      this._ngxSpinnerService.hide();
     }else{
       this.registertionForm.markAllAsTouched();
       Object.keys(this.registertionForm.controls).forEach((c)=>
@@ -102,7 +104,8 @@ export class RegisterComponent {
         if(res.user.id) {
           this.show("success","Success" ,"Success register");
         }
-          this._ngxSpinnerService.hide();
+        this._ngxSpinnerService.hide();
+        this._router.navigate(['/']);
       },
       error: (error) => {
         this.show("error","Error" ,error.error.error);
