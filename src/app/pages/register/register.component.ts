@@ -10,6 +10,7 @@ import { Message, MessageService } from 'primeng/api';
 import { IRegister } from '../../core/interfaces/iregister';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -24,12 +25,13 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     MessagesModule,
     ToastModule,
-    RippleModule],
+    RippleModule,
+    NgxSpinnerModule,],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   providers: [MessageService]
 })
-export class RegisterComponent   {
+export class RegisterComponent {
 
 // propirity
   userName! : FormControl;
@@ -40,10 +42,13 @@ export class RegisterComponent   {
   messages!: Message[] ;
 
 // Constructor
-  constructor(private _AuthService: AuthService ,private messageService: MessageService){
+  constructor(private _AuthService: AuthService ,
+    private messageService: MessageService,
+    private _ngxSpinnerService : NgxSpinnerService){
     this.initFormControls();
     this.initFormGroup();
   }
+
 
 // Methods
 //initial form Controls method
@@ -80,6 +85,7 @@ export class RegisterComponent   {
     if(this.registertionForm.valid){
       console.log(this.registertionForm.value);
       this.registerApi(this.registertionForm.value);
+      this._ngxSpinnerService.hide();
     }else{
       this.registertionForm.markAllAsTouched();
       Object.keys(this.registertionForm.controls).forEach((c)=>
@@ -89,19 +95,21 @@ export class RegisterComponent   {
 
 
   //registerApi
-  registerApi(data : IRegister):void{
+  registerApi(data: IRegister): void {
+    this._ngxSpinnerService.show();
     this._AuthService.register(data).subscribe({
-      next:(res)=>{
-        console.log(res);
-
-        if(res.user.id){
+      next: (res) => {
+        if(res.user.id) {
           this.show("success","Success" ,"Success register");
         }
+          this._ngxSpinnerService.hide();
       },
-      error:(error)=>{this.show("error","Error" ,error.error.error);},
+      error: (error) => {
+        this.show("error","Error" ,error.error.error);
+        this._ngxSpinnerService.hide();
+      },
     });
   }
-
 
 
   //notification
