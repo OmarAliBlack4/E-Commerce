@@ -1,36 +1,19 @@
 import { AuthService } from './../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { MessagesModule } from 'primeng/messages';
 import { Message, MessageService } from 'primeng/api';
 import { IRegister } from '../../core/interfaces/iregister';
-import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { SharedModule } from '../../shared/module/shared/shared.module';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    InputGroupModule,
-    InputGroupAddonModule,
-    InputTextModule,
-    ButtonModule,
-    MessagesModule,
-    ToastModule,
-    RippleModule,
-    NgxSpinnerModule,],
+  imports: [SharedModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  providers: [MessageService]
 })
 export class RegisterComponent {
 

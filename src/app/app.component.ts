@@ -7,7 +7,7 @@ import { LoginComponent } from "./pages/login/login.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavBarComponent, FooterComponent, LoginComponent],
+  imports: [NavBarComponent, FooterComponent, LoginComponent, RegisterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

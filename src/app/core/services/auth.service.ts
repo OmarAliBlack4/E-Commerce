@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseURL } from '../apiRoot/baseUrl';
-import { IRegister } from '../interfaces/iregister';
+import { ILogin, IRegister } from '../interfaces/iregister';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +16,8 @@ export class AuthService {
   //method
   register(registerData:IRegister ) : Observable<any>{
     return this._HttpClient.post(`${baseURL}/api/users`,registerData);
+  }
+  login(loginData:ILogin) :Observable<any>{
+    return this._HttpClient.post(`${baseURL}/api/users/auth`,loginData);
   }
 }
